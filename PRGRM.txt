@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <string.h>
+
+struct BusPass {
+    int passID;
+    char name[50];
+    int age;
+    char route[50];
+    int validityMonths;
+};
+
+struct BusPass passes[100];
+int count = 0;
+
+void addPass() {
+    if (count >= 100) {
+        printf("\nStorage full!\n");
+        return;
+    }
+
+    printf("\nEnter Pass ID: ");
+    scanf("%d", &passes[count].passID);
+
+    printf("Enter Name: ");
+    scanf(" %[^\n]", passes[count].name);
+
+    printf("Enter Age: ");
+    scanf("%d", &passes[count].age);
+
+    printf("Enter Route: ");
+    scanf(" %[^\n]", passes[count].route);
+
+    printf("Enter Validity (months): ");
+    scanf("%d", &passes[count].validityMonths);
+
+    count++;
+    printf("\nPass added successfully!\n");
+}
+
+void viewPasses() {
+    if (count == 0) {
+        printf("\nNo records found.\n");
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        printf("\n----- Pass %d -----\n", i + 1);
+        printf("Pass ID: %d\n", passes[i].passID);
+        printf("Name: %s\n", passes[i].name);
+        printf("Age: %d\n", passes[i].age);
+        printf("Route: %s\n", passes[i].route);
+        printf("Validity: %d months\n", passes[i].validityMonths);
+    }
+}
+
+void searchPass() {
+    int id, found = 0;
+
+    printf("\nEnter Pass ID to search: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (passes[i].passID == id) {
+            printf("\nRecord Found!\n");
+            printf("Name: %s\n", passes[i].name);
+            printf("Age: %d\n", passes[i].age);
+            printf("Route: %s\n", passes[i].route);
+            printf("Validity: %d months\n", passes[i].validityMonths);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nPass not found!\n");
+    }
+}
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\n===== Bus Pass Management System =====\n");
+        printf("1. Add Pass\n");
+        printf("2. View All Passes\n");
+        printf("3. Search Pass\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addPass();
+                break;
+            case 2:
+                viewPasses();
+                break;
+            case 3:
+                searchPass();
+                break;
+            case 4:
+                printf("\nExiting program...\n");
+                return 0;
+            default:
+                printf("\nInvalid choice!\n");
+        }
+    }
+
+    return 0;
+}
